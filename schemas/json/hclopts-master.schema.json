@@ -46,6 +46,22 @@
                     "description": "Syntax definitions for this options file type.",
                     "additionalProperties": false,
                     "properties": {
+                        "booleanTokens": {
+                            "type": "object",
+                            "description": "Define what boolean value tokens are. Defaults to 'true' and 'false' if left undefined.",
+                            "additionalProperties": false,
+                            "required": ["true", "false"],
+                            "properties": {
+                                "trueToken": {
+                                    "type": "string",
+                                    "description": "The token to indicate a true boolean value."
+                                },
+                                "falseToken": {
+                                    "type": "string",
+                                    "description": "The token to indicate a false boolean value."
+                                }
+                            }
+                        },
                         "usesDSNType": {
                             "type": "boolean",
                             "description": "Indicates whether this format uses the non-quoted DSN value type."
@@ -170,26 +186,6 @@
                             "description": "A list of unit type definitions that are referred to when a value that has the unit data type is identified.",
                             "items": {
                                 "$ref": "#/definitions/unitType"
-                            }
-                        },
-                        "conflicts": {
-                            "type": "array",
-                            "description": "A list of invalid option/value combinations.",
-                            "items": {
-                                "type": "object",
-                                "description": "A conflict definition between two invalid options.",
-                                "properties": {
-                                    "isEqualValueConflict": {
-                                        "type": "boolean",
-                                        "description": "Boolean indicating whether these options having an equal value is the source of conflict."
-                                    },
-                                    "opt1": {
-                                        "$ref": "#/definitions/optionConflict"
-                                    },
-                                    "opt2": {
-                                        "$ref": "#/definitions/optionConflict"
-                                    }
-                                }
                             }
                         }
                     }
@@ -330,21 +326,6 @@
                 },
                 "enumDefinition": {
                     "$ref": "#/definitions/keywordDefinition"
-                }
-            }
-        },
-        "optionConflict": {
-            "type": "object",
-            "description": "One of the options in a conflict.",
-            "require": ["name"],
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "The name of the option in the conflict."
-                },
-                "isDefinedConflict": {
-                    "type": "boolean",
-                    "description": "Boolean indicating whether this option being defined is the cause of this conflict."
                 }
             }
         },
